@@ -7,7 +7,7 @@
   <body>
     <ul id="messages"></ul>
     <form id="chat-form">
-      <input id="input-message" autocomplete="off" /><button>Send</button>
+      <input id="input-message" type="text" autocomplete="off" /><button>Send</button>
     </form>
     <script>
       const socket = io();
@@ -22,10 +22,15 @@
         input.value = '';
       });
 
-      socket.on('chat message', (msg) => {
-        const li = document.createElement('li');
-        li.textContent = msg;
-        messages.appendChild(li);
+      socket.on('chat message', (ide,msg) => {
+        console.log(msg);
+        if (id && msg) {
+    const message = document.createElement('li');
+    message.textContent = 'Message from ' + id + ' :_' + msg;
+    document.getElementById('messages').appendChild(message);
+  } else {
+    console.error('Invalid message received :', id, msg);
+  }
       });
     </script>
   </body>
